@@ -40,10 +40,10 @@ typedef struct
 } parameters;
 
 // Prototype for the walk_rows function.
-void * walk_row(void * params);
+void * walk_rows(void * params);
 
 // Prototype for the walk_cols function.
-void * walk_col(void * params);
+void * walk_cols(void * params);
 
 // Prototype for 3x3 square function.
 void * check_square(void * params);
@@ -234,7 +234,7 @@ int main(void)
     param27->board = board;
 
     // ====== Create the threads ======
-    pthread_t thread_row1, thread_row2, hread_row3, thread_row4, thread_row5, \
+    pthread_t thread_row1, thread_row2, thread_row3, thread_row4, thread_row5, \
     thread_row6, thread_row7, thread_row8, thread_row9, thread_col1, thread_col2, \
     thread_col3, thread_col4, thread_col5, thread_col6, thread_col7, thread_col8, \
     thread_col9, thread1, thread2, thread3, thread4, thread5, thread6, thread7, \
@@ -397,7 +397,7 @@ void * walk_cols(void * params) {
     for (int i = startRow; i < 9; ++i) 
     {
         int col[10] = {0};
-        int val = data->board[i][StartCol];
+        int val = data->board[i][startCol];
         if (col[val] != 0)
             return (void *) 0;
         else
