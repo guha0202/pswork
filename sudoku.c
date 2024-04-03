@@ -136,43 +136,43 @@ int main(void)
     param11->board = board;
 
     //col3
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param12 = (parameters *) malloc(sizeof(parameters));
     param12->row = 0;
     param12->col = 2;
     param12->board = board;
     
     //col4
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param13 = (parameters *) malloc(sizeof(parameters));
     param13->row = 0;
     param13->col = 3;
     param13->board = board;
     
     //col5
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param14 = (parameters *) malloc(sizeof(parameters));
     param14->row = 0;
     param14->col = 4;
     param14->board = board;
     
     //col6
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param15 = (parameters *) malloc(sizeof(parameters));
     param15->row = 0;
     param15->col = 5;
     param15->board = board;
 
     //col7
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param16 = (parameters *) malloc(sizeof(parameters));
     param16->row = 0;
     param16->col = 6;
     param16->board = board;
     
     //col8
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param17 = (parameters *) malloc(sizeof(parameters));
     param17->row = 0;
     param17->col = 7;
     param17->board = board;
     
     //col9
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param18 = (parameters *) malloc(sizeof(parameters));
     param18->row = 0;
     param18->col = 8;
     param18->board = board;
@@ -180,55 +180,55 @@ int main(void)
     // ====== Create the parameter for the rows check =======
     
     //row1
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param19 = (parameters *) malloc(sizeof(parameters));
     param19->row = 0;
     param19->col = 0;
     param19->board = board;
     
     //row2
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param20 = (parameters *) malloc(sizeof(parameters));
     param20->row = 1;
     param20->col = 0;
     param20->board = board;
     
     //row3
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param21 = (parameters *) malloc(sizeof(parameters));
     param21->row = 2;
     param21->col = 0;
     param21->board = board;
     
     //row4
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param22 = (parameters *) malloc(sizeof(parameters));
     param22->row = 3;
     param22->col = 0;
     param22->board = board;
     
     //row5
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param23 = (parameters *) malloc(sizeof(parameters));
     param23->row = 4;
     param23->col = 0;
     param23->board = board;
     
     //row6
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param24 = (parameters *) malloc(sizeof(parameters));
     param24->row = 5;
     param24->col = 0;
     param24->board = board;
     
     //row7
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param25 = (parameters *) malloc(sizeof(parameters));
     param25->row = 6;
     param25->col = 0;
     param25->board = board;
     
     //row8
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param26 = (parameters *) malloc(sizeof(parameters));
     param26->row = 7;
     param26->col = 0;
     param26->board = board;
     
     //row9
-    parameters * param11 = (parameters *) malloc(sizeof(parameters));
+    parameters * param27 = (parameters *) malloc(sizeof(parameters));
     param27->row = 8;
     param27->col = 0;
     param27->board = board;
