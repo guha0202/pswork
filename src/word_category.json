@@ -1,0 +1,10 @@
+{
+    "KEYWORD": 1,
+    "IDENTIFIER": 2,
+    "INTEGER": 3,
+    "FLOAT": 4,
+    "CHARACTER": 5,
+    "LOGICAL_OP": 6,
+    "OPERATOR": 7,
+    "DELIMITER": 8
+}
