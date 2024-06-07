@@ -95,13 +95,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 login.php
 <?php
 require_once 'includes/functions.php';
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $role = $_POST['role'];
-    registerUser($username, $password, $role);
-    echo "User registered successfully!";
+    $user = loginUser($username, $password);
+    if ($user) {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['role'] = $user['role'];
+        header('Location: index.php');
+    } else {
+        echo "Invalid username or password";
+    }
 }
 ?>
 
@@ -109,24 +115,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Login</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h2>Register</h2>
-    <form method="post" action="register.php">
+    <h2>Login</h2>
+    <form method="post" action="login.php">
         <label>Username: <input type="text" name="username" required></label><br>
         <label>Password: <input type="password" name="password" required></label><br>
-        <label>Role: 
-            <select name="role">
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-            </select>
-        </label><br>
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
     </form>
 </body>
 </html>
+
 
 index.php
 <?php
