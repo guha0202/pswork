@@ -1,0 +1,231 @@
+config.php
+<?php
+// Database configuration
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', 'password');
+define('DB_NAME', 'allocation_of_human_resources');
+
+// Try connecting to the database
+$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+// Check connection
+if($conn === false){
+    die("ERROR: Could not connect. " . mysqli_connect_error());
+}
+?>
+
+db.php
+<?php
+require_once 'config.php';
+
+function executeQuery($query, $params, $types) {
+    global $conn;
+    $stmt = $conn->prepare($query);
+    if ($params) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    return $stmt;
+}
+?>
+
+functions.php
+<?php
+require_once 'db.php';
+
+// User registration
+function registerUser($username, $password, $role) {
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+    executeQuery($query, [$username, $hashed_password, $role], 'sss');
+}
+
+// User login
+function loginUser($username, $password) {
+    $query = "SELECT id, password, role FROM users WHERE username = ?";
+    $stmt = executeQuery($query, [$username], 's');
+    $result = $stmt->get_result();
+    if ($result->num_rows == 1) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            return $user;
+        }
+    }
+    return false;
+}
+?>
+
+register.php
+<?php
+require_once 'includes/functions.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
+    registerUser($username, $password, $role);
+    echo "User registered successfully!";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h2>Register</h2>
+    <form method="post" action="register.php">
+        <label>Username: <input type="text" name="username" required></label><br>
+        <label>Password: <input type="password" name="password" required></label><br>
+        <label>Role: 
+            <select name="role">
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+        </label><br>
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
+
+login.php
+<?php
+require_once 'includes/functions.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
+    registerUser($username, $password, $role);
+    echo "User registered successfully!";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h2>Register</h2>
+    <form method="post" action="register.php">
+        <label>Username: <input type="text" name="username" required></label><br>
+        <label>Password: <input type="password" name="password" required></label><br>
+        <label>Role: 
+            <select name="role">
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+        </label><br>
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
+
+index.php
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+echo "Welcome, " . $_SESSION['role'] . "!<br>";
+
+if ($_SESSION['role'] == 'admin') {
+    echo '<a href="admin.php">Admin Page</a><br>';
+}
+echo '<a href="user.php">User Page</a><br>';
+echo '<a href="logout.php">Logout</a>';
+?>
+
+admin.php
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+    header('Location: login.php');
+    exit();
+}
+
+echo "Welcome to the Admin Page!<br>";
+echo '<a href="index.php">Home</a><br>';
+?>
+
+user.php
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+echo "Welcome to the User Page!<br>";
+echo '<a href="index.php">Home</a><br>';
+?>
+
+logout.php
+<?php
+session_start();
+session_destroy();
+header('Location: login.php');
+?>
+
+backp   restore
+// backup.php
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+    header('Location: login.php');
+    exit();
+}
+
+$backup_file = '/path/to/backup/allocation_of_human_resources.sql';
+exec("mysqldump -u root -ppassword allocation_of_human_resources > $backup_file");
+
+echo "Database backup completed successfully!<br>";
+echo '<a href="index.php">Home</a><br>';
+?>
+
+// restore.php
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+    header('Location: login.php');
+    exit();
+}
+
+$backup_file = '/path/to/backup/allocation_of_human_resources.sql';
+exec("mysql -u root -ppassword allocation_of_human_resources < $backup_file");
+
+echo "Database restore completed successfully!<br>";
+echo '<a href="index.php">Home</a><br>';
+?>
+
+styles.css
+body {
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    color: #333;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input, select, button {
+    display: block;
+    margin-top: 5px;
+}
